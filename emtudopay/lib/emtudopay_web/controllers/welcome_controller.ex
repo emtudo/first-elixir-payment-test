@@ -11,6 +11,7 @@ defmodule EmtudopayWeb.WelcomeController do
   defp handle_response({:ok, %{result: result}}, conn) do
     conn
     |> put_status(:ok)
+    |> IO.inspect()
     |> json(%{message: "Welcome to Emtudoapy API. Here is your number #{result}"})
   end
 

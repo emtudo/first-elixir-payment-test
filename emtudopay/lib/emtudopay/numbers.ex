@@ -9,7 +9,8 @@ defmodule Emtudopay.Numbers do
     result =
       result
       |> String.split(",")
-      |> Enum.map(fn number -> String.to_integer(number) end)
+      |> Stream.map(fn number -> String.to_integer(number) end)
+      |> IO.inspect()
       |> Enum.sum
 
     {:ok, %{result: result}}
