@@ -1,0 +1,22 @@
+# v2 syntax
+version: "3.4"
+
+# Named volumes
+volumes:
+  emtudopaydev-postgres-data:
+    driver: local
+
+services:
+  # db
+  db:
+    image: postgres:13.0-alpine
+    container_name: emtudopaydev-postgres-dev
+    restart: unless-stopped
+    ports:
+      - "${DOCKER_DB_PORT:-7732}:5432"
+    environment:
+      - POSTGRES_DB=emtudopay
+      - POSTGRES_USER=emtudopay
+      - POSTGRES_PASSWORD=emtudopay
+    volumes:
+      - emtudopaydev-postgres-data:/var/lib/postgresql/data
