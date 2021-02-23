@@ -9,6 +9,8 @@ defmodule EmtudopayWeb.Router do
     pipe_through :api
 
     get "/:filename", WelcomeController, :index
+
+    post "/users", UserController, :create
   end
 
   # Enables LiveDashboard only for development
