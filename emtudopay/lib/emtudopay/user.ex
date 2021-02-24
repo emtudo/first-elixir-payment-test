@@ -18,18 +18,17 @@ defmodule Emtudopay.User do
     field :nickname, :string
     has_one :account, Account
 
-    timestamps
+    timestamps()
   end
 
   def changeset(params) do
     %__MODULE__{}
     |> cast(params, @required_params)
-    |> IO.inspect
     |> validate_required(@required_params)
     |> validate_length(:password, min: 8)
     |> validate_format(:email, ~r/@/)
     |> unique_constraint([:nickname])
-    |> put_password_hash
+    |> put_password_hash()
   end
 
   defp put_password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do

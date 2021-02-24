@@ -17,13 +17,17 @@ defmodule Emtudopay.Users.Create do
   defp insert_account(repo, user) do
     user.id
     |> account_changeset()
-    |> repo.insert
+    |> repo.insert()
   end
 
   defp account_changeset(user_id) do
-    params = %{user_id: user_id, balance: 0.0}
+    params = %{user_id: user_id, balance: "0.0"}
 
     Account.changeset(params)
+  end
+
+  defp preload_data(repo, user) do
+    {:ok, repo.preload(user, :account)}
   end
 
   defp run_transaction (multi) do
@@ -31,9 +35,5 @@ defmodule Emtudopay.Users.Create do
       {:error, _, reason, _} -> {:error, reason}
       {:ok, %{preload_data: user}} ->  {:ok, user}
     end
-  end
-
-  defp preload_data(repo, user) do
-    {:ok, repo.preload(user, :account)}
   end
 end
