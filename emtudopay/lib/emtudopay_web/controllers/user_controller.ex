@@ -2,6 +2,7 @@ defmodule EmtudopayWeb.UserController do
   use EmtudopayWeb, :controller
 
   alias Emtudopay.User
+  action_fallback EmtudopayWeb.FallbackController
 
   def create(conn, params) do
     params
@@ -15,10 +16,5 @@ defmodule EmtudopayWeb.UserController do
     |> render("create.json", user: user)
   end
 
-  defp handle_response({:error, result}, conn) do
-    conn
-    |> put_status(:bad_request)
-    |> put_view(EmtudopayWeb.ErrorView)
-    |> render("400.json", result: result)
-  end
+  defp handle_response({:error, _} = error, _), do: error
 end
