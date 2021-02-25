@@ -1,11 +1,13 @@
 defmodule Emtudopay.Accounts.Operation do
   alias Ecto.Multi
-  alias Emtudopay.{Account, Repo}
+  alias Emtudopay.Account
 
   def call(%{"id" => id, "value" => value}, operation) do
+    operation_name = account_operation_name(operation)
     Multi.new()
-    |> Multi.run(:account, fn repo, _ -> get_account(repo, id) end)
-    |> Multi.run(:update_balance, fn repo, %{account: account} ->
+    |> Multi.run(operation_name, fn repo, _ -> get_account(repo, id) end)
+    |> Multi.run(operation, fn repo, changes ->
+      account = Map.get(changes, operation_name)
       update_balance(repo, account, value, operation)
      end)
   end
@@ -30,7 +32,7 @@ defmodule Emtudopay.Accounts.Operation do
   end
 
   defp handle_cast({:ok, %Decimal{ sign: 1} = value}, balance, :deposit), do: Decimal.add(value, balance)
-  defp handle_cast({:ok, %Decimal{ sign: 1} = value}, balance, :withdraw), do: Decimal.sub(value, balance)
+  defp handle_cast({:ok, %Decimal{ sign: 1} = value}, balance, :withdraw), do: Decimal.sub(balance, value)
   defp handle_cast(_, _balance, _operation), do: {:error, "Invalid deposit value"}
 
   defp update_account({:error, _} = error, _, _), do: error
@@ -40,5 +42,10 @@ defmodule Emtudopay.Accounts.Operation do
     account
     |> Account.changeset(params)
     |> repo.update()
+  end
+
+  defp account_operation_name(operation) do
+    "account_#{Atom.to_string(operation)}"
+    |> String.to_atom()
   end
 end

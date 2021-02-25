@@ -16,6 +16,7 @@ defmodule EmtudopayWeb.Router do
     post "/users", UserCreateController, :create
     post "/accounts/:id/deposit", AccountDepositController, :deposit
     post "/accounts/:id/withdraw", AccountWithdrawController, :withdraw
+    post "/accounts/transaction", AccountTransactionController, :transaction
   end
 
   # Enables LiveDashboard only for development
