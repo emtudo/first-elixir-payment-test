@@ -33,7 +33,8 @@ defmodule Emtudopay.Accounts.Operation do
 
   defp handle_cast({:ok, %Decimal{ sign: 1} = value}, balance, :deposit), do: Decimal.add(value, balance)
   defp handle_cast({:ok, %Decimal{ sign: 1} = value}, balance, :withdraw), do: Decimal.sub(balance, value)
-  defp handle_cast(_, _balance, _operation), do: {:error, "Invalid deposit value"}
+  defp handle_cast(_, _balance, :deposit), do: {:error, "Invalid deposit value"}
+  defp handle_cast(_, _balance, :withdraw), do: {:error, "Invalid withdraw value"}
 
   defp update_account({:error, _} = error, _, _), do: error
 
