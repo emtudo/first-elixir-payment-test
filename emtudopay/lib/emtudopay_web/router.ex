@@ -5,10 +5,13 @@ defmodule EmtudopayWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", EmtudopayWeb do
+
+  scope "/", EmtudopayWeb do
     pipe_through :api
 
-    get "/:filename", WelcomeController, :index
+    get "/", WelcomeController, :index
+
+    get "/file/:filename", FilenameController, :index
 
     post "/users", UserController, :create
   end
