@@ -1,4 +1,4 @@
-defmodule Emtudopay.Accounts.Deposit do
+defmodule Emtudopay.Accounts.Withdraw do
   alias Ecto.Multi
   alias Emtudopay.{Account, Repo}
 
@@ -20,18 +20,18 @@ defmodule Emtudopay.Accounts.Deposit do
 
   defp update_balance(repo, account, value) do
     account
-    |> sum_values(value)
+    |> sub_values(value)
     |> update_account(repo, account)
   end
 
-  defp sum_values(%Account{balance: balance}, value) do
+  defp sub_values(%Account{balance: balance}, value) do
     value
     |> Decimal.cast()
     |> handle_cast(balance)
   end
 
-  defp handle_cast({:ok, %Decimal{ sign: 1} = value}, balance), do: Decimal.add(value, balance)
-  defp handle_cast(_, _), do: {:error, "Invalid deposit value"}
+  defp handle_cast({:ok, %Decimal{ sign: 1} = value}, balance), do: Decimal.sub(balance, value)
+  defp handle_cast(_, _), do: {:error, "Invalid withdraw value"}
 
   defp update_account({:error, _} = error, _, _), do: error
 

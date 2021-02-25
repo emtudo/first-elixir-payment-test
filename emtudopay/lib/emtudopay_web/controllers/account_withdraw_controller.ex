@@ -3,7 +3,7 @@ defmodule EmtudopayWeb.AccountWithdrawController do
   alias Emtudopay.Account
 
   def withdraw(conn, params) do
-    with {:ok, %Account{} = account} <- Emtudopay.deposit(params) do
+    with {:ok, %Account{} = account} <- Emtudopay.withdraw(params) do
       conn
       |> put_status(:ok)
       |> put_view(EmtudopayWeb.AccountView)
