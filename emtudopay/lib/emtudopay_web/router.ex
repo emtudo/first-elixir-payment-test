@@ -13,7 +13,7 @@ defmodule EmtudopayWeb.Router do
 
     get "/file/:filename", FilenameController, :index
 
-    post "/users", UserController, :create
+    post "/users", UserCreateController, :create
   end
 
   # Enables LiveDashboard only for development

@@ -1,4 +1,4 @@
-defmodule EmtudopayWeb.UserController do
+defmodule EmtudopayWeb.UserCreateController do
   use EmtudopayWeb, :controller
 
   alias Emtudopay.User
@@ -8,6 +8,7 @@ defmodule EmtudopayWeb.UserController do
     with {:ok, %User{} = user} <- Emtudopay.create_user(params) do
       conn
       |> put_status(:created)
+      |> put_view(EmtudopayWeb.UserView)
       |> render("create.json", user: user)
     end
   end
