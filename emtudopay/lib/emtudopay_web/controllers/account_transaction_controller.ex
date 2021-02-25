@@ -1,10 +1,9 @@
 defmodule EmtudopayWeb.AccountTransactionController do
   use EmtudopayWeb, :controller
-  # alias Emtudopay.Transaction
   action_fallback EmtudopayWeb.FallbackController
-
+  alias Emtudopay.Accounts.Transactions.Response, as: TransactionResponse
   def transaction(conn, params) do
-    with {:ok, %{} = transaction} <- Emtudopay.transaction(params) do
+    with {:ok, %TransactionResponse{} = transaction} <- Emtudopay.transaction(params) do
       conn
       |> put_status(:ok)
       |> put_view(EmtudopayWeb.AccountView)
