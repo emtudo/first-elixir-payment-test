@@ -2,6 +2,8 @@ defmodule Emtudopay.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
+  alias Emtudopay.Repo
+  import Ecto.Query, only: [from: 2]
 
   alias Emtudopay.Account
 
@@ -28,8 +30,20 @@ defmodule Emtudopay.User do
     |> validate_length(:password, min: 8)
     |> validate_format(:email, ~r/@/)
     |> unique_constraint([:nickname])
+    |> unique_nickname()
     |> put_password_hash()
   end
+
+  defp unique_nickname(%Changeset{valid?: true, changes: %{nickname: nickname}} = changeset) do
+    IO.inspect(changeset)
+    IO.puts(".....")
+    case Repo.exists?(from u in Emtudopay.User, where: u.nickname == ^nickname) do
+      false -> changeset
+      true -> add_error(changeset, "nickname", "Nickanme already exists")
+    end
+  end
+
+  # defp exists_nickname({:error, _}, changeset), do: changeset
 
   defp put_password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Bcrypt.add_hash(password))
