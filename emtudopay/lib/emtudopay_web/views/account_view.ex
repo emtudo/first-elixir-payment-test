@@ -10,7 +10,7 @@ defmodule EmtudopayWeb.AccountView do
       message: "Balance changed successfully",
       account: %{
         id: id,
-        balance: balance,
+        balance: Decimal.to_float(balance),
         user_id: user_id
       }
     }
@@ -24,12 +24,12 @@ defmodule EmtudopayWeb.AccountView do
       transaction: %{
         from_account: %{
           id: from_account.id,
-          balance: from_account.balance,
+          balance: Decimal.to_float(from_account.balance),
           user_id: from_account.user_id
         },
         to_account: %{
           id: to_account.id,
-          balance: to_account.balance,
+          balance: Decimal.to_float(to_account.balance),
           user_id: to_account.user_id
         }
       }

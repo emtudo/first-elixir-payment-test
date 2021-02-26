@@ -13,7 +13,7 @@ defmodule EmtudopayWeb.UserView do
         nickname: nickname,
         account: %{
           id: account_id,
-          balance: balance
+          balance:  Decimal.to_float(balance)
         }
       }
     }
