@@ -1,8 +1,22 @@
 defmodule EmtudopayWeb.Router do
   use EmtudopayWeb, :router
 
+  import Plug.BasicAuth
+
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :auth do
+    plug :basic_auth, Application.get_env(:emtudopay, :basic_auth)
+  end
+
+  scope "/", EmtudopayWeb do
+    pipe_through [:api, :auth]
+
+    post "/accounts/:id/deposit", AccountDepositController, :deposit
+    post "/accounts/:id/withdraw", AccountWithdrawController, :withdraw
+    post "/accounts/transaction", AccountTransactionController, :transaction
   end
 
 
@@ -14,9 +28,6 @@ defmodule EmtudopayWeb.Router do
     get "/file/:filename", FilenameController, :index
 
     post "/users", UserCreateController, :create
-    post "/accounts/:id/deposit", AccountDepositController, :deposit
-    post "/accounts/:id/withdraw", AccountWithdrawController, :withdraw
-    post "/accounts/transaction", AccountTransactionController, :transaction
   end
 
   # Enables LiveDashboard only for development

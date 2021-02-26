@@ -19,6 +19,7 @@ defmodule EmtudopayWeb.AccountView do
   def render("transaction.json", %{
     transaction: %TransactionResponse{to_account: to_account, from_account: from_account}
     }) do
+    IO.inspect(from_account)
     %{
       message: "Transaction done successfully",
       transaction: %{
