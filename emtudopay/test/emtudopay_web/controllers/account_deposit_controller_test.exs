@@ -1,5 +1,5 @@
 defmodule EmtudopayWeb.AccountDepositControllerTest do
-  use EmtudopayWeb.ConnCase
+  use EmtudopayWeb.ConnCase, async: true
   alias Emtudopay.{Account, User}
 
   describe "deposit/2" do

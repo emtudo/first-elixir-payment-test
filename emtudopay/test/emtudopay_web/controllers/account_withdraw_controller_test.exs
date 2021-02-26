@@ -1,5 +1,5 @@
 defmodule EmtudopayWeb.AccountWithdrawControllerTest do
-  use EmtudopayWeb.ConnCase
+  use EmtudopayWeb.ConnCase, async: true
   alias Emtudopay.{Account, User, Repo}
 
   describe "withdraw/2" do

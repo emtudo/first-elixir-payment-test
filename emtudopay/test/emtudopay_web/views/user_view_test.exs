@@ -1,5 +1,5 @@
 defmodule EmtudopayWeb.UserViewTest do
-  use EmtudopayWeb.ConnCase
+  use EmtudopayWeb.ConnCase, async: true
   import Phoenix.View
   alias Emtudopay.User
   alias Emtudopay.Account

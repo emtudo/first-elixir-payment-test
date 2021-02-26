@@ -1,5 +1,5 @@
 defmodule Emtudopay.Users.CreateTest do
-  use Emtudopay.DataCase
+  use Emtudopay.DataCase, async: true
 
   alias Emtudopay.User
   alias Emtudopay.Users.Create
