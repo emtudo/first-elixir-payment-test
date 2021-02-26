@@ -35,13 +35,13 @@ defmodule Emtudopay.User do
   end
 
   defp unique_nickname(%Changeset{valid?: true, changes: %{nickname: nickname}} = changeset) do
-    IO.inspect(changeset)
-    IO.puts(".....")
     case Repo.exists?(from u in Emtudopay.User, where: u.nickname == ^nickname) do
       false -> changeset
       true -> add_error(changeset, "nickname", "Nickanme already exists")
     end
   end
+
+  defp unique_nickname(changeset), do: changeset
 
   # defp exists_nickname({:error, _}, changeset), do: changeset
 

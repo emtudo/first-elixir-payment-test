@@ -10,7 +10,6 @@ defmodule Emtudopay.Numbers do
       result
       |> String.split(",")
       |> Stream.map(fn number -> String.to_integer(number) end)
-      |> IO.inspect()
       |> Enum.sum
 
     {:ok, %{result: result}}

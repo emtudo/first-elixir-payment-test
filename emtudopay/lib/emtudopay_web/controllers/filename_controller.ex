@@ -11,7 +11,6 @@ defmodule EmtudopayWeb.FilenameController do
   defp handle_response({:ok, %{result: result}}, conn) do
     conn
     |> put_status(:ok)
-    |> IO.inspect()
     |> json(%{message: "Here is your number #{result}"})
   end
 
