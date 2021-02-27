@@ -8,7 +8,7 @@ defmodule EmtudopayWeb.Router do
   end
 
   pipeline :auth do
-    plug :basic_auth, Application.get_env(:emtudopay, :basic_auth)
+    plug :basic_auth, Application.compile_env(:emtudopay, :basic_auth)
   end
 
   scope "/", EmtudopayWeb do
